@@ -1,1 +1,1 @@
-# HobbyProjects
+This repo will host a bunch of hobby projects of mine. So far the one project "Ocean" shows gerstner waves, TODO: add references.
