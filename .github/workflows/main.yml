@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 5.0.x
           
       - name: Publish App
-        run: dotnet publish --configuration Release --output build
+        run: dotnet publish --configuration Release --output build --nologo
           
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
