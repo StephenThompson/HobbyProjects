@@ -29,7 +29,6 @@ function createScene() {
 
 
     renderer = new THREE.WebGLRenderer();
-    // renderer.setSize(container.width, container.height);
     renderer.setSize(size, size);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     container.appendChild(renderer.domElement);
@@ -47,22 +46,8 @@ function createScene() {
     sun = new THREE.Vector3(1.0, 1.0, 1.0);
 
     // WATER
-    const params = {
-        color: '#0a0fff',
-        scale: 4,
-        flowX: 1,
-        flowY: 1
-    };
-
     waterGeometry = new THREE.PlaneGeometry( 4, 4, 50, 50 );
-    water = new Ocean( waterGeometry, {
-        color: params.color,
-        scale: params.scale,
-        flowDirection: new THREE.Vector2( params.flowX, params.flowY ),
-        textureWidth: 1024,
-        textureHeight: 1024
-    } );
-
+    water = new Ocean( waterGeometry);
     water.rotation.x = Math.PI * - 0.5;
     scene.add( water );
 
@@ -78,10 +63,7 @@ function setSunDirection(elevation, azimuth) {
     const phi = THREE.MathUtils.degToRad( 90 - elevation );
     const theta = THREE.MathUtils.degToRad( azimuth );
     sun.setFromSphericalCoords( 1, phi, theta );
-    
-    console.log(elevation, azimuth, " :: " , sun.x, sun.y, sun.z);
     water.material.uniforms[ '_SunDirection' ].value.copy( sun ).normalize();
-    // water.material.uniforms[ '_sunDirection' ].value.copy( new THREE.Vector3(1,1,1) ).normalize();
 }
 
 window.scene = {

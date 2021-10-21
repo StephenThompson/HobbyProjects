@@ -13,30 +13,37 @@
     </div>
 
     <div class="slidecontainer">
-    <p>Sun Elevation:</p>
-    <input type="range" min="1" max="90" class="slider" @bind="sunElevation" @oninput="ChangeSunDirection" style="display: inline-flex;" >
+        <span>
+            <b class="slideHeader">Sun Elevation:</b>
+            <p class="slideText">0°</p>
+            <input type="range" min="0" max="90" class="slider" @bind="sunElevation" style="display: inline-block;" >
+            <p class="slideText">90°</p>
+        </span>
     </div>
 
     <div class="slidecontainer">
-    <p>Sun Azimuth:</p>
-    <input type="range" min="0" max="360" class="slider"  @bind="sunAzimuth" @oninput="ChangeSunDirection" style="display: inline-block;">
+        <span>
+            <b class="slideHeader">Sun Azimuth:</b>
+            <p class="slideText">0°</p>
+            <input type="range" min="0" max="360" class="slider" @bind="sunAzimuth" style="display: inline-block;">
+            <p class="slideText">360°</p>
+        </span>
     </div>
-
 
     <div class="text"  style=" padding-left: 20px; text-align: center;">
         <h1>Controls</h1>
         <table>
             <tbody>
                 <tr>
-                    <td>Left Mouse</td>
+                    <th>Left Mouse:</th>
                     <td>Rotate Camera</td>
                 </tr>
                 <tr>
-                    <td>Middle Mouse</td>
+                    <th>Middle Mouse:</th>
                     <td>Zoom In/Out</td>
                 </tr>
                 <tr>
-                    <td>Right Mouse</td>
+                    <th>Right Mouse:</th>
                     <td>Pan Camera</td>
                 </tr>
             </tbody>
@@ -46,8 +53,10 @@
 
 
 @code {
-    private string sunElevation = "30";
-    private string sunAzimuth = "180";
+    private string sunElevation { get => _sunElevation; set { _sunElevation = value; ChangeSunDirection(); } }
+    private string sunAzimuth { get => _sunAzimuth; set { _sunAzimuth = value; ChangeSunDirection(); } }
+    private string _sunElevation = "45";
+    private string _sunAzimuth = "270";
 
     private async void ChangeSunDirection()
     {        
@@ -60,6 +69,9 @@
     protected async override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
-        await JSRuntime.InvokeVoidAsync("scene.create");
+        {
+            await JSRuntime.InvokeVoidAsync("scene.create");
+            ChangeSunDirection();
+        }
     }
 }
