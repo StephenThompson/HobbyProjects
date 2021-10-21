@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 5.0.x
           
       - name: Publish App
-        run: dotnet publish -c Release -o build --no-logo
+        run: dotnet publish -c Release -o build --nologo
           
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
