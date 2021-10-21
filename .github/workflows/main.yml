@@ -14,10 +14,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-      - name: Publish .NET Core Project
-        run: |
-          cp wwwroot/index.html wwwroot/404.html
-          dotnet publish BlazorApp.csproj --configuration Release --output build
+          
+      - name: Publish App
+        run: dotnet publish HobbyProjects.csproj -c Release
+          
       - name: Add .nojekyll file
         run: touch release/wwwroot/.nojekyll
       - name: Commit wwwroot to GitHub Pages
