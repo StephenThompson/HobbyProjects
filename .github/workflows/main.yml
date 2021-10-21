@@ -16,15 +16,9 @@ jobs:
           dotnet-version: 5.0.x
           
       - name: Publish App
-        run: dotnet publish -c Release -o build --nologo
-        
-      - name: Change base-tag in index.html
-        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' index.html
-  
-      - name: copy index.html to 404.html
-        run: cp index.html 404.html
+        run: dotnet publish --configuration Release -output build
           
-      - name: Commit wwwroot to GitHub Pages
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
