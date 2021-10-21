@@ -9,23 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-      - name: Publish .NET Core Project
-        run: |
-          cp wwwroot/index.html wwwroot/404.html
-          dotnet publish BlazorApp.csproj --configuration Release --output build
-      - name: Add .nojekyll file
-        run: touch release/wwwroot/.nojekyll
-      - name: Commit wwwroot to GitHub Pages
+          
+      - name: Publish App
+        run: dotnet publish --configuration Release --output build
+          
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BASE_BRANCH: main # The branch the action should deploy from.
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build/wwwroot # The folder the action should deploy.
-          SINGLE_COMMIT: true
+          token: ${{ secrets.ACCESS_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/wwwroot
+          single_commit: true
 
