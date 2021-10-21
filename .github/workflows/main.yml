@@ -15,13 +15,17 @@ jobs:
         with:
           dotnet-version: 5.0.x
       - name: Publish .NET Core Project
-        run: dotnet publish --configuration Release --output build
+        run: |
+          cp wwwroot/index.html wwwroot/404.html
+          dotnet publish BlazorApp.csproj --configuration Release --output build
+      - name: Add .nojekyll file
+        run: touch release/wwwroot/.nojekyll
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BASE_BRANCH: main # The branch the action should deploy from.
-          BRANCH: gh-pages-from-actions # The branch the action should deploy to.
+          BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build/wwwroot # The folder the action should deploy.
           SINGLE_COMMIT: true
 
