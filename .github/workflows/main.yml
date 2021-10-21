@@ -19,10 +19,10 @@ jobs:
         run: dotnet publish -c Release -o build --nologo
         
       - name: Change base-tag in index.html
-        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' release/wwwroot/index.html
+        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' index.html
   
       - name: copy index.html to 404.html
-        run: cp release/wwwroot/index.html release/wwwroot/404.html
+        run: cp index.html 404.html
           
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
