@@ -16,13 +16,21 @@ jobs:
           dotnet-version: 5.0.x
           
       - name: Publish App
-        run: dotnet publish --configuration Release --output build
+        run: dotnet publish -c Release -o build --nologo
+      
+      - name: Change base-tag in index.html from / to HobbyProjects
+        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' build/wwwroot/index.html
+        
+      - name: copy index.html to 404.html
+        run: cp build/wwwroot/index.html build/wwwroot/404.html
+
+      - name: Add .nojekyll file
+        run: touch build/wwwroot/.nojekyll
           
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN  }}
           branch: gh-pages # The branch the action should deploy to.
           folder: build/wwwroot
-          single_commit: true
 
