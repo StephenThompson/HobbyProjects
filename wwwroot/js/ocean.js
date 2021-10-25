@@ -9,7 +9,7 @@ class Ocean extends THREE.Mesh {
 		var sunDirection = new THREE.Vector3(1, 1, 1).normalize();
 
 		const textureLoader = new THREE.TextureLoader();
-		const texture = textureLoader.load('../images/foamSeamless.jpg'); 
+		const texture = textureLoader.load('../HobbyProjects/images/foamSeamless.jpg'); 
 		texture.wrapS = THREE.RepeatWrapping;
 		texture.wrapT = THREE.RepeatWrapping;
 		texture.magFilter = THREE.NearestFilter;
