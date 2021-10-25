@@ -124,7 +124,12 @@ class Ocean extends THREE.Mesh {
 
 			void main( void ) {
 				vec3 surfaceNormal = normalize(vNormal);
-				float ldotn = max(dot(surfaceNormal, _SunDirection)*0.5 + 0.5, 0.5);
+
+				vec3 ambLight = vec3(0.05, 0.1, 0.2);
+				vec3 sunColor = vec3(mix(0.96, 0.9, _SunDirection.y), 
+									 mix(0.73, 0.9, _SunDirection.y), 
+									 mix(0.39, 0.9, _SunDirection.y));
+				vec3 ldotn = sunColor * max(dot(surfaceNormal, _SunDirection)*0.5 + 0.5, 0.5);
 
 				// Foam
 				vec3 f1 = texture2D(_texFoam, vec2(uv_Foam.x + time * 4.0, uv_Foam.y) * 1.0).rgb;
@@ -139,9 +144,9 @@ class Ocean extends THREE.Mesh {
 				float depth = clamp((sqrt(worldViewDir.y) * 1.0 + 0.05), 0.0, 1.0);
 
 				vec3 col = mix( _MiddleColor, mix(_DeepColor, _ShallowColor, 1.0 - depth), subsurface) * ldotn;
-				col = mix(vec3(0.0, 0.0, 0.0), f * ldotn, foamAmount); 
+				col = ambLight + mix(vec3(0.0, 0.0, 0.0), f * ldotn, foamAmount); 
 				
-				float sunPower = 0.5 * pow(clamp(abs(dot(_SunDirection, worldViewDir)), 0.0, 1.0), 5.0);
+				float sunPower = 0.5 * pow(clamp(dot(-_SunDirection, worldViewDir), 0.0, 1.0), 5.0);
 				float colorLerp = clamp(subsurface + sunPower, 0.0, 1.0);
 				vec3 Emission = mix(_MiddleColor* ldotn, mix(_DeepColor, _ShallowColor, 1.0 - depth), colorLerp) *
 					clamp(clamp(_SunDirection.y + 0.5, 0.0, 1.0) * (1.0 - foamAmount * 0.1) + sunPower, 0.0, 1.0);
@@ -149,12 +154,12 @@ class Ocean extends THREE.Mesh {
 
 				// Specular highlight
 				vec3 halfview = normalize(worldViewDir + _SunDirection);
-				col += pow(max(0.0, dot(halfview, surfaceNormal)), 10.0) * vec3(0.5, 0.8, 1.0) * 0.2;
+				col += pow(max(0.0, dot(halfview, surfaceNormal)), 10.0) * vec3(0.5, 0.8, 1.0) * 0.2 * sunColor;
 
 
 				vec3 halfNorm = normalize(surfaceNormal + worldViewDir);
 				float fresnel = calculateFresnel(0.1, surfaceNormal, worldViewDir) * 0.2;
-				col = mix(col, col + vec3(1.0, 1.0, 1.0), fresnel);
+				col = mix(col, col + vec3(1.0, 1.0, 1.0) * sunColor, fresnel);
 
 				gl_FragColor = vec4(col , 1);
 			}`
