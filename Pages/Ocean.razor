@@ -16,7 +16,7 @@
         <span>
             <b class="slideHeader">Sun Elevation:</b>
             <p class="slideText">0°</p>
-            <input type="range" min="0" max="90" class="slider" @bind="sunElevation" @oninput='() => {}' style="display: inline-block;" >
+            <input type="range" min="0" max="90" class="slider" @bind="sunElevation" @oninput='v => { sunElevation = (string)v.Value; }' style="display: inline-block;" >
             <p class="slideText">90°</p>
         </span>
     </div>
@@ -25,7 +25,7 @@
         <span>
             <b class="slideHeader">Sun Azimuth:</b>
             <p class="slideText">0°</p>
-            <input type="range" min="0" max="360" class="slider" @bind="sunAzimuth" style="display: inline-block;">
+            <input type="range" min="0" max="360" class="slider" @bind="sunAzimuth" @oninput='v => { sunAzimuth = (string)v.Value; }' style="display: inline-block;">
             <p class="slideText">360°</p>
         </span>
     </div>
@@ -55,8 +55,8 @@
 @code {
     private string sunElevation { get => _sunElevation; set { _sunElevation = value; ChangeSunDirection(); } }
     private string sunAzimuth { get => _sunAzimuth; set { _sunAzimuth = value; ChangeSunDirection(); } }
-    private string _sunElevation = "45";
-    private string _sunAzimuth = "270";
+    private string _sunElevation = "60";
+    private string _sunAzimuth = "80";
 
     private async void ChangeSunDirection()
     {        
