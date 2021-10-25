@@ -16,7 +16,7 @@
         <span>
             <b class="slideHeader">Sun Elevation:</b>
             <p class="slideText">0°</p>
-            <input type="range" min="0" max="90" class="slider" @bind="sunElevation" style="display: inline-block;" >
+            <input type="range" min="0" max="90" class="slider" @bind="sunElevation" @oninput='() => {}' style="display: inline-block;" >
             <p class="slideText">90°</p>
         </span>
     </div>
