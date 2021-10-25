@@ -19,7 +19,7 @@ jobs:
         run: dotnet publish --configuration Release --output build --nologo
       
       - name: Change base-tag in index.html from / to HobbyProjects
-        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' release/wwwroot/index.html
+        run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' build/wwwroot/index.html
         
       - name: copy index.html to 404.html
         run: cp release/wwwroot/index.html release/wwwroot/404.html
