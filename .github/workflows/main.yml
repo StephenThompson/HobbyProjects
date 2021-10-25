@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 5.0.x
           
       - name: Publish App
-        run: dotnet publish --c Release --o build --nologo
+        run: dotnet publish -c Release -o build --nologo
       
       - name: Change base-tag in index.html from / to HobbyProjects
         run: sed -i 's/<base href="\/" \/>/<base href="\/HobbyProjects\/" \/>/g' build/wwwroot/index.html
